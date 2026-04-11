@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jack's Lamborghini</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@50..125,300..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --ink-2: #141414;
+    --ink-3: #1c1c1c;
+    --bone: #f4f4f2;
+    --mute: #9a9a97;
+    --line: #2a2a2a;
+    --accent: #c9a24b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Archivo', system-ui, sans-serif;
+    background: var(--ink);
+    color: var(--bone);
+    font-feature-settings: 'ss01';
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img, video { display: block; max-width: 100%; }
+  .container { max-width: 1760px; margin: 0 auto; padding: 0 clamp(20px, 3vw, 56px); }
+  .uppercase { text-transform: uppercase; font-variation-settings: "wdth" 50, "wght" 700; letter-spacing: 0.04em; }
+
+  /* HEADER */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 22px clamp(20px, 3vw, 56px);
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(180deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0) 100%);
+    backdrop-filter: blur(6px);
+  }
+  header .menu-btn, header .icon-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: transparent; border: none; color: var(--bone);
+    padding: 8px 14px; cursor: pointer;
+    font: inherit; text-transform: uppercase;
+    font-variation-settings: "wdth" 50, "wght" 700;
+    font-size: 13px; letter-spacing: 0.08em;
+    transition: background 0.25s;
+  }
+  header .menu-btn:hover, header .icon-btn:hover { background: rgba(255,255,255,0.07); }
+  header .burger { display: inline-flex; flex-direction: column; gap: 4px; }
+  header .burger span { width: 22px; height: 1.5px; background: currentColor; display: block; }
+  header .logo {
+    font-size: 22px; letter-spacing: 0.3em; font-variation-settings: "wdth" 62, "wght" 800;
+    text-align: center;
+  }
+  header .logo .shield { display:block; font-size:10px; color: var(--accent); letter-spacing: 0.25em; margin-top: 2px; }
+  header .actions { display: flex; gap: 6px; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    align-items: center;
+    gap: 0;
+    padding: 140px clamp(20px, 3vw, 56px) 80px;
+    background:
+      radial-gradient(ellipse at 80% 30%, rgba(201,162,75,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.025) 0%, transparent 60%),
+      #060606;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+  .hero .car-stage {
+    position: relative;
+    width: 110%;
+    max-width: none;
+    justify-self: start;
+    margin-left: -8%;
+    aspect-ratio: 16/10;
+  }
+  .hero .car-stage video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* blend the video into the dark hero background */
+    mix-blend-mode: screen;
+    filter: contrast(1.08) saturate(1.1) brightness(1.02);
+    -webkit-mask-image:
+      radial-gradient(ellipse at center, black 40%, transparent 85%);
+    mask-image:
+      radial-gradient(ellipse at center, black 40%, transparent 85%);
+  }
+  .hero .content {
+    position: relative;
+    z-index: 5;
+  }
+  .hero .eyelet {
+    font-size: 13px; letter-spacing: 0.2em;
+    color: var(--accent); margin-bottom: 18px;
+    font-variation-settings: "wdth" 50, "wght" 700;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: clamp(48px, 9.2vw, 176px);
+    line-height: 0.86;
+    text-transform: uppercase;
+    font-variation-settings: "wdth" 55, "wght" 800;
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 span { display: block; }
+  .hero h1 .thin { font-variation-settings: "wdth" 55, "wght" 300; color: var(--bone); }
+  .hero .subline {
+    max-width: 560px;
+    font-size: 16px; line-height: 1.5;
+    color: rgba(244,244,242,0.78);
+    margin-bottom: 36px;
+  }
+  .hero .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 20px 32px;
+    font-size: 13px;
+    font-variation-settings: "wdth" 50, "wght" 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--bone);
+    color: var(--bone); background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .btn::after {
+    content: ""; position: absolute; inset: 0;
+    background: var(--bone);
+    transform: translateX(-101%);
+    transition: transform 0.4s ease;
+    z-index: 0;
+  }
+  .btn:hover::after { transform: translateX(0); }
+  .btn:hover { color: var(--ink); }
+  .btn span, .btn svg { position: relative; z-index: 1; }
+  .btn.primary { background: var(--bone); color: var(--ink); border-color: var(--bone); }
+  .btn.primary::after { background: var(--accent); }
+  .btn.primary:hover { color: var(--ink); }
+  .btn svg { width: 14px; height: 14px; }
+
+  /* SECTION SHELL */
+  section { padding: clamp(60px, 10vh, 140px) 0; }
+  .smart-title {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 40px; margin-bottom: clamp(40px, 6vh, 80px);
+    flex-wrap: wrap;
+  }
+  .smart-title h2 {
+    font-size: clamp(36px, 6vw, 92px);
+    line-height: 0.9;
+    text-transform: uppercase;
+    font-variation-settings: "wdth" 55, "wght" 800;
+    letter-spacing: -0.01em;
+  }
+  .smart-title p { max-width: 440px; color: var(--mute); font-size: 15px; line-height: 1.6; }
+
+  /* BANNER */
+  .wide-banner {
+    position: relative;
+    min-height: 520px;
+    display: flex; align-items: center;
+    background: linear-gradient(90deg, #111 0%, #1c1c1c 40%, #0a0a0a 100%);
+    overflow: hidden;
+    margin: 0;
+  }
+  .wide-banner .bg-mark {
+    position: absolute; right: -5%; top: 50%; transform: translateY(-50%);
+    font-size: clamp(200px, 38vw, 640px);
+    color: rgba(255,255,255,0.03);
+    font-variation-settings: "wdth" 55, "wght" 900;
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .wide-banner .container { position: relative; }
+  .wide-banner .eyelet { color: var(--accent); font-size: 13px; letter-spacing: 0.2em; margin-bottom: 20px; text-transform: uppercase; font-variation-settings: "wdth" 50, "wght" 700; }
+  .wide-banner h3 {
+    font-size: clamp(40px, 6vw, 96px);
+    line-height: 0.92;
+    text-transform: uppercase;
+    font-variation-settings: "wdth" 55, "wght" 800;
+    max-width: 1100px;
+    margin-bottom: 32px;
+  }
+  .wide-banner p { max-width: 560px; color: rgba(244,244,242,0.75); margin-bottom: 40px; font-size: 16px; line-height: 1.6; }
+
+  /* FAMILIES GALLERY */
+  .families { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--line); }
+  .family-card {
+    position: relative;
+    aspect-ratio: 4/5;
+    background: var(--ink-2);
+    overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 40px 32px;
+    cursor: pointer;
+  }
+  .family-card .bg {
+    position: absolute; inset: 0;
+    transition: transform 0.9s cubic-bezier(.2,.7,.2,1);
+  }
+  .family-card:hover .bg { transform: scale(1.06); }
+  .family-card .bg::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,0) 40%, rgba(10,10,10,0.95) 100%);
+  }
+  .family-card .bg { background-size: cover; background-position: center; filter: saturate(0.92) contrast(1.05); }
+  .family-card.a .bg { background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Lamborghini_Huracan_STO_1X7A0297.jpg/1920px-Lamborghini_Huracan_STO_1X7A0297.jpg'); }
+  .family-card.b .bg { background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Lamborghini_Huracan_Evo%2C_GIMS_2019%2C_Le_Grand-Saconnex_%28GIMS1010%29.jpg/1920px-Lamborghini_Huracan_Evo%2C_GIMS_2019%2C_Le_Grand-Saconnex_%28GIMS1010%29.jpg'); }
+  .family-card.c .bg { background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Lamborghini_Urus_Performante_1X7A6805.jpg/1920px-Lamborghini_Urus_Performante_1X7A6805.jpg'); }
+  .family-card .bg::after { background: linear-gradient(180deg, rgba(10,10,10,0.15) 20%, rgba(10,10,10,0.55) 60%, rgba(10,10,10,0.97) 100%) !important; }
+  .family-card .silhouette { display: none; }
+  .family-card .info { position: relative; z-index: 2; }
+  .family-card .info .family-label { font-size: 11px; color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 10px; font-variation-settings: "wdth" 50, "wght" 700; }
+  .family-card .info h3 {
+    font-size: clamp(32px, 3.2vw, 56px);
+    line-height: 0.9;
+    text-transform: uppercase;
+    font-variation-settings: "wdth" 60, "wght" 800;
+    margin-bottom: 20px;
+  }
+  .family-card .info .link {
+    font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+    border-bottom: 1px solid currentColor; padding-bottom: 4px;
+    display: inline-block;
+    font-variation-settings: "wdth" 50, "wght" 700;
+  }
+
+  /* MODELS CHOOSER */
+  .models-chooser { padding-top: 0; }
+  .models-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .model-card {
+    border-top: 1px solid var(--line);
+    padding: 32px 0;
+  }
+  .model-card .thumb {
+    aspect-ratio: 16/10;
+    background: #0a0a0a center/cover no-repeat;
+    margin-bottom: 24px;
+    position: relative; overflow: hidden;
+    filter: saturate(0.95) contrast(1.05);
+    transition: transform 0.8s cubic-bezier(.2,.7,.2,1);
+  }
+  .model-card:hover .thumb { transform: scale(1.03); }
+  .model-card .thumb svg { display: none; }
+  .model-card h3 {
+    font-size: 28px;
+    text-transform: uppercase;
+    font-variation-settings: "wdth" 60, "wght" 800;
+    margin-bottom: 10px;
+  }
+  .model-card .tag { font-size: 11px; color: var(--mute); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 20px; }
+  .model-card .specs { display: flex; gap: 28px; padding: 16px 0; border-top: 1px solid var(--line); margin-top: 8px; }
+  .model-card .spec .val { font-size: 22px; font-variation-settings: "wdth" 55, "wght" 700; }
+  .model-card .spec .key { font-size: 10px; color: var(--mute); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 4px; }
+
+  /* NEWS */
+  .news-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .news-grid .card { grid-column: span 1; }
+  .news-grid .card.wide { grid-column: span 2; grid-row: span 2; }
+  .news-card {
+    background: var(--ink-2);
+    overflow: hidden;
+    cursor: pointer;
+    display: flex; flex-direction: column;
+    height: 100%;
+    transition: transform 0.4s;
+  }
+  .news-card:hover { transform: translateY(-4px); }
+  .news-card .img {
+    aspect-ratio: 16/10;
+    background: #0a0a0a center/cover no-repeat;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.8s cubic-bezier(.2,.7,.2,1);
+  }
+  .news-card:hover .img { transform: scale(1.04); }
+  .news-card .img::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(10,10,10,0) 50%, rgba(10,10,10,0.55) 100%);
+  }
+  .news-grid .wide .news-card .img { aspect-ratio: 4/3; }
+  .news-card .body { padding: 24px 26px 30px; flex: 1; display: flex; flex-direction: column; }
+  .news-card .cat { font-size: 10px; color: var(--accent); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 14px; font-variation-settings: "wdth" 50, "wght" 700; }
+  .news-card h4 {
+    font-size: 20px; line-height: 1.15;
+    text-transform: uppercase;
+    font-variation-settings: "wdth" 65, "wght" 700;
+    margin-bottom: 14px;
+  }
+  .news-grid .wide .news-card h4 { font-size: 34px; }
+  .news-card .date { font-size: 11px; color: var(--mute); letter-spacing: 0.1em; text-transform: uppercase; margin-top: auto; }
+
+  /* PARAGRAPHS */
+  .paragraphs { border-top: 1px solid var(--line); }
+  .paragraphs .grid { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; }
+  .paragraphs h2 {
+    font-size: clamp(32px, 4vw, 56px);
+    text-transform: uppercase;
+    font-variation-settings: "wdth" 55, "wght" 800;
+    line-height: 0.95;
+  }
+  .paragraphs .body p { color: var(--mute); font-size: 16px; line-height: 1.75; margin-bottom: 20px; }
+
+  /* FOOTER */
+  footer { background: #050505; border-top: 1px solid var(--line); padding: 80px 0 0; }
+  footer .top { display: grid; grid-template-columns: 1.2fr 3fr; gap: 60px; padding-bottom: 60px; }
+  footer .brand .mark { font-size: 32px; letter-spacing: 0.25em; font-variation-settings: "wdth" 60, "wght" 800; margin-bottom: 16px; }
+  footer .brand p { color: var(--mute); font-size: 14px; line-height: 1.6; max-width: 340px; }
+  footer .cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+  footer .col h5 { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bone); margin-bottom: 22px; font-variation-settings: "wdth" 50, "wght" 700; }
+  footer .col ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  footer .col a { font-size: 13px; color: var(--mute); transition: color 0.2s; }
+  footer .col a:hover { color: var(--bone); }
+  footer .bottom { border-top: 1px solid var(--line); padding: 28px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+  footer .bottom .legal { display: flex; gap: 28px; font-size: 11px; color: var(--mute); text-transform: uppercase; letter-spacing: 0.12em; }
+  footer .bottom .copy { font-size: 11px; color: var(--mute); text-transform: uppercase; letter-spacing: 0.12em; }
+  footer .socials { display: flex; gap: 14px; }
+  footer .socials a {
+    width: 40px; height: 40px;
+    border: 1px solid var(--line);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: all 0.25s;
+  }
+  footer .socials a:hover { background: var(--bone); color: var(--ink); border-color: var(--bone); }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 1s ease, transform 1s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .families, .models-grid { grid-template-columns: 1fr 1fr; }
+    .news-grid { grid-template-columns: repeat(2, 1fr); }
+    .news-grid .card.wide { grid-column: span 2; grid-row: span 1; }
+    footer .top { grid-template-columns: 1fr; }
+    footer .cols { grid-template-columns: repeat(2, 1fr); }
+    .paragraphs .grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @media (max-width: 1100px) {
+    .hero { grid-template-columns: 1fr; padding-top: 120px; }
+    .hero .car-stage { justify-self: center; max-width: 520px; margin-top: 40px; }
+  }
+  @media (max-width: 700px) {
+    header .logo { font-size: 16px; }
+    header .menu-btn span.label, header .icon-btn span.label { display: none; }
+    .families, .models-grid, .news-grid { grid-template-columns: 1fr; }
+    .news-grid .card.wide { grid-column: span 1; }
+    .hero h1 { font-size: 56px; }
+    .smart-title { align-items: flex-start; }
+    footer .cols { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="menu-btn" aria-label="Open menu">
+    <span class="burger" aria-hidden="true"><span></span><span></span><span></span></span>
+    <span class="label">Menu</span>
+  </button>
+  <div class="logo">
+    JACK'S
+    <span class="shield">AUTOMOBILI</span>
+  </div>
+  <div class="actions">
+    <button class="icon-btn" aria-label="Reserve">
+      <span class="label">Reserve</span>
+    </button>
+    <button class="icon-btn" aria-label="Search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="content">
+    <div class="eyelet reveal">— The private collection · reserved</div>
+    <h1 class="reveal">
+      <span>JACK'S</span>
+      <span class="thin">LAMBORGHINI</span>
+    </h1>
+    <p class="subline reveal">A personal reserve of hand-finished grand tourers, super sports, and one-offs — built for the road, shared with the few.</p>
+    <div class="cta-row reveal">
+      <a href="#models" class="btn primary"><span>Enter the garage</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      <a href="#story" class="btn"><span>The story</span></a>
+    </div>
+  </div>
+  <div class="car-stage reveal">
+    <video id="heroCar" autoplay muted loop playsinline>
+      <source src="car.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+<script>
+  // Slow the video down ever so slightly
+  const v = document.getElementById('heroCar');
+  if (v) v.playbackRate = 0.7;
+</script>
+
+<!-- FIRST BANNER -->
+<section class="wide-banner">
+  <div class="bg-mark">FURIA</div>
+  <div class="container">
+    <div class="eyelet reveal">— Introducing · 2026</div>
+    <h3 class="reveal">A new chapter<br>carved in carbon.</h3>
+    <p class="reveal">Meet the Furia — a limited 88-car hybrid coupé, shaped at Sant'Agata and tuned on the Nardò ring. Every panel hand-laid. Every key earned.</p>
+    <a href="#" class="btn reveal"><span>Discover the Furia</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+  </div>
+</section>
+
+<!-- MODELS TITLE -->
+<section id="models">
+  <div class="container">
+    <div class="smart-title">
+      <h2 class="reveal">The<br>collection.</h2>
+      <p class="reveal">Three silhouettes, one obsession. Each car in the garage has been specified from raw sketch to signed key — no two alike, none repeated.</p>
+    </div>
+  </div>
+
+  <!-- FAMILIES GALLERY -->
+  <div class="families">
+    <a class="family-card a reveal" href="#">
+      <div class="bg"></div>
+      <svg class="silhouette" viewBox="0 0 500 200" fill="none">
+        <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c9a24b"/><stop offset="1" stop-color="#3a1f06"/></linearGradient></defs>
+        <path d="M30 140 Q 60 80 140 70 Q 200 30 270 30 Q 350 30 410 70 Q 470 80 490 140 L 490 160 L 30 160 Z" fill="url(#g1)"/>
+        <circle cx="120" cy="160" r="26" fill="#0a0a0a" stroke="#c9a24b" stroke-width="2"/>
+        <circle cx="400" cy="160" r="26" fill="#0a0a0a" stroke="#c9a24b" stroke-width="2"/>
+      </svg>
+      <div class="info">
+        <div class="family-label">Super Sport</div>
+        <h3>Furia<br>SVR</h3>
+        <span class="link">Configure →</span>
+      </div>
+    </a>
+    <a class="family-card b reveal" href="#">
+      <div class="bg"></div>
+      <svg class="silhouette" viewBox="0 0 500 200" fill="none">
+        <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6aa0ff"/><stop offset="1" stop-color="#0a1830"/></linearGradient></defs>
+        <path d="M30 140 Q 80 90 160 80 Q 220 40 290 40 Q 360 50 420 90 Q 470 100 490 140 L 490 160 L 30 160 Z" fill="url(#g2)"/>
+        <circle cx="120" cy="160" r="26" fill="#0a0a0a" stroke="#6aa0ff" stroke-width="2"/>
+        <circle cx="400" cy="160" r="26" fill="#0a0a0a" stroke="#6aa0ff" stroke-width="2"/>
+      </svg>
+      <div class="info">
+        <div class="family-label">Grand Tourer</div>
+        <h3>Sereno<br>GT</h3>
+        <span class="link">Configure →</span>
+      </div>
+    </a>
+    <a class="family-card c reveal" href="#">
+      <div class="bg"></div>
+      <svg class="silhouette" viewBox="0 0 500 200" fill="none">
+        <defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9ad67a"/><stop offset="1" stop-color="#14290a"/></linearGradient></defs>
+        <path d="M30 120 Q 80 60 180 50 L 340 50 Q 420 60 470 120 L 470 160 L 30 160 Z" fill="url(#g3)"/>
+        <circle cx="120" cy="160" r="26" fill="#0a0a0a" stroke="#9ad67a" stroke-width="2"/>
+        <circle cx="400" cy="160" r="26" fill="#0a0a0a" stroke="#9ad67a" stroke-width="2"/>
+      </svg>
+      <div class="info">
+        <div class="family-label">Super SUV</div>
+        <h3>Monte<br>Uno</h3>
+        <span class="link">Configure →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- SECOND BANNER -->
+<section class="wide-banner">
+  <div class="bg-mark">CORSA</div>
+  <div class="container">
+    <div class="eyelet reveal">— Track programme</div>
+    <h3 class="reveal">Born in Sant'Agata,<br>proven at Nardò.</h3>
+    <p class="reveal">Four members-only track days a year, tuition by two former F1 engineers, and a garage that travels the world with you.</p>
+    <a href="#" class="btn reveal"><span>Request invitation</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+  </div>
+</section>
+
+<!-- MODELS CHOOSER -->
+<section class="models-chooser">
+  <div class="container">
+    <div class="smart-title">
+      <h2 class="reveal">Choose<br>your signature.</h2>
+      <p class="reveal">Three current builds, configured in the Modena atelier. Delivery begins Q2 2027 — waiting list is open by introduction.</p>
+    </div>
+    <div class="models-grid">
+      <div class="model-card reveal">
+        <div class="thumb" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Lamborghini_Huracan_STO_1X7A7216.jpg/1920px-Lamborghini_Huracan_STO_1X7A7216.jpg');"></div>
+        <div class="tag">Super Sport · V12 Hybrid</div>
+        <h3>Furia SVR</h3>
+        <div class="specs">
+          <div class="spec"><div class="val">1,012</div><div class="key">HP</div></div>
+          <div class="spec"><div class="val">2.4s</div><div class="key">0–100</div></div>
+          <div class="spec"><div class="val">88</div><div class="key">Units</div></div>
+        </div>
+      </div>
+      <div class="model-card reveal">
+        <div class="thumb" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Lamborghini_Revuelto_DSC_6984.jpg/1920px-Lamborghini_Revuelto_DSC_6984.jpg');"></div>
+        <div class="tag">Grand Tourer · V10</div>
+        <h3>Sereno GT</h3>
+        <div class="specs">
+          <div class="spec"><div class="val">818</div><div class="key">HP</div></div>
+          <div class="spec"><div class="val">2.9s</div><div class="key">0–100</div></div>
+          <div class="spec"><div class="val">240</div><div class="key">Units</div></div>
+        </div>
+      </div>
+      <div class="model-card reveal">
+        <div class="thumb" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Lamborghini_Urus_SE_DSC_8521.jpg/1920px-Lamborghini_Urus_SE_DSC_8521.jpg');"></div>
+        <div class="tag">Super SUV · Twin-turbo V8</div>
+        <h3>Monte Uno</h3>
+        <div class="specs">
+          <div class="spec"><div class="val">666</div><div class="key">HP</div></div>
+          <div class="spec"><div class="val">3.2s</div><div class="key">0–100</div></div>
+          <div class="spec"><div class="val">500</div><div class="key">Units</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <div class="container">
+    <div class="smart-title">
+      <h2 class="reveal">From<br>the garage.</h2>
+      <p class="reveal">Field notes from Sant'Agata, Nardò, and the road between. Dispatches from the workshop, drivers, and the people building the next car.</p>
+    </div>
+    <div class="news-grid">
+      <div class="card wide reveal">
+        <div class="news-card">
+          <div class="img" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Lamborghini_Aventador_SVJ_Roadster_IMG_9580.jpg/1920px-Lamborghini_Aventador_SVJ_Roadster_IMG_9580.jpg');"></div>
+          <div class="body">
+            <div class="cat">Cover story</div>
+            <h4>Inside the build of the Furia SVR — 11 months, 88 cars, one obsession</h4>
+            <div class="date">11 April 2026</div>
+          </div>
+        </div>
+      </div>
+      <div class="card reveal">
+        <div class="news-card">
+          <div class="img" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Lamborghini_Hurac%C3%A1n_Tecnica_1X7A7430.jpg/1920px-Lamborghini_Hurac%C3%A1n_Tecnica_1X7A7430.jpg');"></div>
+          <div class="body">
+            <div class="cat">Track</div>
+            <h4>Nardò: the first laps of the Sereno GT</h4>
+            <div class="date">02 April 2026</div>
+          </div>
+        </div>
+      </div>
+      <div class="card reveal">
+        <div class="news-card">
+          <div class="img" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Lamborghini_Urus_S_1X7A6796.jpg/1920px-Lamborghini_Urus_S_1X7A6796.jpg');"></div>
+          <div class="body">
+            <div class="cat">Design</div>
+            <h4>How the Monte Uno grille was drawn, twice</h4>
+            <div class="date">24 March 2026</div>
+          </div>
+        </div>
+      </div>
+      <div class="card reveal">
+        <div class="news-card">
+          <div class="img" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Lamborghini_Revuelto_DSC_6985.jpg/1920px-Lamborghini_Revuelto_DSC_6985.jpg');"></div>
+          <div class="body">
+            <div class="cat">Atelier</div>
+            <h4>A private day inside the leather room</h4>
+            <div class="date">18 March 2026</div>
+          </div>
+        </div>
+      </div>
+      <div class="card reveal">
+        <div class="news-card">
+          <div class="img" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Lamborghini_Huracan_Perfomante%2C_IAA_2017%2C_Frankfurt_%281Y7A2082%29.jpg/1920px-Lamborghini_Huracan_Perfomante%2C_IAA_2017%2C_Frankfurt_%281Y7A2082%29.jpg');"></div>
+          <div class="body">
+            <div class="cat">Event</div>
+            <h4>Arena Village opens its doors in May</h4>
+            <div class="date">10 March 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARAGRAPHS -->
+<section class="paragraphs" id="story">
+  <div class="container">
+    <div class="grid">
+      <h2 class="reveal">Driven<br>by dreams.</h2>
+      <div class="body reveal">
+        <p>This is a private garage disguised as a brand — a place to collect the cars Jack has chased since he was eleven years old with a folder of cut-out magazine pages.</p>
+        <p>Every model is hand-specified with the designers in Modena, stitched by name in the leather room, and delivered with a key cut from a single piece of brushed titanium.</p>
+        <p>There is no dealer network. There is no waiting list you can join. If you're reading this, it's because someone already has your name.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="top">
+      <div class="brand">
+        <div class="mark">JACK'S</div>
+        <p>Automobili Jack S.r.l. — Via Emilia 12, 40019 Sant'Agata Bolognese, Italy. A private collection available by introduction only.</p>
+      </div>
+      <div class="cols">
+        <div class="col">
+          <h5>The Cars</h5>
+          <ul>
+            <li><a href="#">Furia SVR</a></li>
+            <li><a href="#">Sereno GT</a></li>
+            <li><a href="#">Monte Uno</a></li>
+            <li><a href="#">Heritage</a></li>
+            <li><a href="#">One-offs</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <h5>The Experience</h5>
+          <ul>
+            <li><a href="#">Corsa programme</a></li>
+            <li><a href="#">Atelier visits</a></li>
+            <li><a href="#">Arena Village</a></li>
+            <li><a href="#">Driver tuition</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <h5>Ownership</h5>
+          <ul>
+            <li><a href="#">Concierge</a></li>
+            <li><a href="#">Service</a></li>
+            <li><a href="#">Warranty</a></li>
+            <li><a href="#">Members area</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <h5>The House</h5>
+          <ul>
+            <li><a href="#">Story</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="copy">© 2026 Automobili Jack S.r.l.</div>
+      <div class="socials">
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2c-.2-1.4-.9-2.1-2.3-2.3C17.4 4.5 12 4.5 12 4.5s-5.4 0-7.3.4C3.3 5.1 2.6 5.8 2.4 7.2 2 9.1 2 12 2 12s0 2.9.4 4.8c.2 1.4.9 2.1 2.3 2.3 1.9.4 7.3.4 7.3.4s5.4 0 7.3-.4c1.4-.2 2.1-.9 2.3-2.3.4-1.9.4-4.8.4-4.8s0-2.9-.4-4.8zM10 15.5v-7l6 3.5-6 3.5z"/></svg></a>
+        <a href="#" aria-label="X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 3h3l-7.5 8.6L22 21h-6.8l-5.3-6.5L3.8 21H1l8-9.2L1.5 3H8.5l4.8 6 4.7-6z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 014 0v4M12 17v-7"/></svg></a>
+      </div>
+      <div class="legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+</script>
+
+</body>
+</html>
