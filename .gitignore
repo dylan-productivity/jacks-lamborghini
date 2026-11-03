@@ -1,0 +1,24 @@
+# --- Baseline (added by repo-declutter) ---
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials*.json
+# Private data and exports (never commit raw exports)
+private/
+exports/
+# Dependencies, caches, build output
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+dist/
+build/
+# OS and editor noise
+.DS_Store
+.idea/
+*.log
